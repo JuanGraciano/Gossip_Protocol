@@ -24,6 +24,9 @@ int main()
                     "Manga tu caminao\n\r",
                     "Rubia aunque sea de farmacia\n\r"};
 
+  int bufsize = 1024;
+  char buffer[bufsize];
+
   int listener = open_socket();
 
   if(listener < 0){
@@ -42,12 +45,36 @@ int main()
     struct sockaddr_storage client;
     unsigned int addres_size = sizeof(client);
     cout << "Waiting client" << endl;
-    int connect = accept(listener,   (struct sockaddr*)&client, &addres_size);
+    int connect = accept(listener, (struct sockaddr*)&client, &addres_size);
     if(connect < 0){
       cout << "Error connectiong second socket" << endl;
     }
     cout << "Serving the client" << endl;
     char * msg = advice[rand()%5];
+    int isExit = 0; //Cero to false, 1 true
+
+    do{
+      cout << "\nServer: ";
+      do {
+          cin >> buffer;
+          send(server, buffer, bufsize, 0);
+          if (*buffer == '#') {
+              send(server, buffer, bufsize, 0);
+              *buffer = '*';
+              isExit = true;
+          }
+      } while (*buffer != '*');
+
+      cout << "Client: ";
+      do {
+          recv(server, buffer, bufsize, 0);
+          cout << buffer << " ";
+          if (*buffer == '#') {
+              *buffer == '*';
+              isExit = true;
+          }
+      } while (*buffer != '*');
+    }while(isExit == 0);
     send(connect, msg, strlen(msg), 0);
     msg = NULL;
     close(connect);
