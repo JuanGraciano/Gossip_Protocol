@@ -13,6 +13,12 @@ using namespace std;
 
 int main()
 {
+  char * advice[]= {"Hoy se bebe\n\r",
+                    "Vamono pal monte\n\r",
+                    "Vamo a ponerno loco\n\r",
+                    "Manga tu caminao\n\r",
+                    "Rubia aunque sea de farmacia\n\r"}
+
   int listener = open_socket();
 
   if(listener < 0){
@@ -36,7 +42,7 @@ int main()
       cout << "Error connectiong second socket" << endl;
     }
     cout << "Serving the client" << endl;
-    //char * msg = advice[]
+    char * msg = advice[rand()%5];
     send(connect, msg, strlen(msg), 0);
     msg = NULL;
     close(connect);
