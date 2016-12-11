@@ -62,7 +62,7 @@ int main()
             c. Third is a protocol argument: should always be 0. The
             OS will choose the most appropiate protocol.
             This will return a small integer and is used for all
-            referenc es to this socket. If the socket call fails, 
+            references to this socket. If the socket call fails,
             it returns -1.
     */
     client = socket(AF_INET, SOCK_STREAM, 0); //open socket
