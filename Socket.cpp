@@ -57,9 +57,9 @@ int main()
       cout << "\nServer: ";
       do {
           cin >> buffer;
-          send(server, buffer, bufsize, 0);
+          send(connect, buffer, bufsize, 0);
           if (*buffer == '#') {
-              send(server, buffer, bufsize, 0);
+              send(connect, buffer, bufsize, 0);
               *buffer = '*';
               isExit = true;
           }
@@ -67,7 +67,7 @@ int main()
 
       cout << "Client: ";
       do {
-          recv(server, buffer, bufsize, 0);
+          recv(connect, buffer, bufsize, 0);
           cout << buffer << " ";
           if (*buffer == '#') {
               *buffer == '*';
@@ -75,7 +75,7 @@ int main()
           }
       } while (*buffer != '*');
     }while(isExit == 0);
-    send(connect, msg, strlen(msg), 0);
+    //send(connect, msg, strlen(msg), 0);
     msg = NULL;
     close(connect);
   }
