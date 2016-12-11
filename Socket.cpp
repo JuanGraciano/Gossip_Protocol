@@ -61,7 +61,7 @@ int main()
           if (*buffer == '#') {
               send(connect, buffer, bufsize, 0);
               *buffer = '*';
-              isExit = true;
+              isExit = 1;
           }
       } while (*buffer != '*');
 
@@ -71,7 +71,7 @@ int main()
           cout << buffer << " ";
           if (*buffer == '#') {
               *buffer == '*';
-              isExit = true;
+              isExit = 1;
           }
       } while (*buffer != '*');
     }while(isExit == 0);
