@@ -3,11 +3,16 @@
 #include <iostream>
 #include <string.h>
 #include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <netdb.h>
 
 #define PORT 7200
 
 int open_socket();
-int bind_to_port(int, int);
+void bind_to_port(int);
 
 using namespace std;
 
@@ -17,7 +22,7 @@ int main()
                     "Vamono pal monte\n\r",
                     "Vamo a ponerno loco\n\r",
                     "Manga tu caminao\n\r",
-                    "Rubia aunque sea de farmacia\n\r"}
+                    "Rubia aunque sea de farmacia\n\r"};
 
   int listener = open_socket();
 
@@ -26,7 +31,7 @@ int main()
     exit(1);
   }
 
-  bind_to_port(listener, PORT);
+  bind_to_port(listener);
   if(listen (listener, 10) < 0){
     cout << "I cant to listen the port" << endl;
     exit(2);
@@ -35,9 +40,9 @@ int main()
   cout << "Linking port" << endl;
   while(1){
     struct sockaddr_storage client;
-    unsigned int address_size = sizeof(client);
+    unsigned int addres_size = sizeof(client);
     cout << "Waiting client" << endl;
-    int connect = accept(listener, (struct sockeaddr*)&client, &addres_size);
+    int connect = accept(listener,   (struct sockaddr*)&client, &addres_size);
     if(connect < 0){
       cout << "Error connectiong second socket" << endl;
     }
@@ -57,10 +62,11 @@ int open_socket(){
   return s;
 }
 
-void bind_to_port(int socket, int port){
+void bind_to_port(int socket){
   struct sockaddr_in  name;
+  int port = PORT;
   name.sin_family = PF_INET;
-  name.sin_port = (int_port_t)htons(port);
+  name.sin_port = (in_port_t)htons(port);
   name.sin_addr.s_addr = htonl(INADDR_ANY);
 
   int reuse = -1;
