@@ -119,7 +119,7 @@ int main()
     /* ------------- LISTENING CALL ------------- */
     /* ---------------- listen() ---------------- */
 
-    listen(client, 1);
+    listen(client, 10);
 
     /*
         The listen system call allows the process to listen
